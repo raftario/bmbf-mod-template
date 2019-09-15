@@ -28,5 +28,5 @@ LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"'
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
-LOCAL_SRC_FILES  := $(call rwildcard,src/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.cpp) $(call rwildcard,extern/shared/utils/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.c)
+LOCAL_SRC_FILES  := $(call rwildcard,extern/shared/inline-hook/,*.cpp) $(call rwildcard,extern/shared/utils/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.c) $(call rwildcard,src/,*.cpp)
 include $(BUILD_SHARED_LIBRARY)
