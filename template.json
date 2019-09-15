@@ -1,0 +1,11 @@
+{
+    "toFill": [
+        "src/main.cpp",
+        "Android.mk",
+        "beatonmod.json",
+        "README.md"
+    ],
+    "toDelete": [
+        "LICENSE"
+    ]
+}
