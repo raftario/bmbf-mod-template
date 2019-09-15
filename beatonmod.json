@@ -3,7 +3,7 @@
     "name": "{% mod.name %}",
     "author": "{% mod.author %}",
     "description": [
-        "{% mod.description %}"
+        "{% for l in mod.description %}"
     ],
     "category": "{% mod.category %}",
     "gameVersion": "1.3.0p2",
