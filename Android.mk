@@ -20,11 +20,13 @@ TARGET_ARCH_ABI := arm64-v8a
 include $(CLEAR_VARS)
 LOCAL_MODULE := hook
 
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+
 include $(CLEAR_VARS)
 LOCAL_LDLIBS     := -llog
 LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"'
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
-LOCAL_SRC_FILES  := ./src/main.cpp ./extern/beatsaber-hook/shared/inline-hook/And64InlineHook.cpp ./extern/beatsaber-hook/shared/utils/il2cpp-utils.cpp ./extern/beatsaber-hook/shared/utils/utils.cpp ./extern/beatsaber-hook/shared/inline-hook/inlineHook.c ./extern/beatsaber-hook/shared/inline-hook/relocate.c
+LOCAL_SRC_FILES  := $(call rwildcard,src/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.cpp) $(call rwildcard,extern/shared/utils/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.c)
 include $(BUILD_SHARED_LIBRARY)
