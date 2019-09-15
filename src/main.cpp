@@ -12,5 +12,5 @@ MAKE_HOOK(hello_world, 0x000000, void, void *self) {
 __attribute__((constructor)) void lib_main()
 {
     INSTALL_HOOK(hello_world);
-    log_base("Installed {% mod.name %} hooks!");
+    log_base("Installed {{ mod.name }} hooks!");
 }

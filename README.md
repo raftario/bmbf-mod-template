@@ -1,3 +1,5 @@
-# {% mod.name %}
+# {{ mod.name }}
 
-{% mod.description %}
+{% for l in mod.description %}
+{{ l }}
+{% endfor %}
