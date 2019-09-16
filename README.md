@@ -2,6 +2,7 @@
 
 {% for l in mod.description %}
 {{ l }}
+
 {% endfor %}
 
 ## Credits
