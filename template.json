@@ -1,11 +1,20 @@
 {
     "toFill": [
         "src/main.cpp",
+        ".gitmodules",
         "Android.mk",
         "beatonmod.json",
         "README.md"
     ],
     "toDelete": [
         "LICENSE"
+    ],
+    "submodules": [
+        {
+            "path": "beatsaber-hook",
+            "url": "https://github.com/sc2ad/beatsaber-hook.git",
+            "branch": "modSettings",
+            "commit": "9436ea96950c827aef27997b403438bae94c504b"
+        }
     ]
 }
