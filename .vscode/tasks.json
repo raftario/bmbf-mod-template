@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "NDK Build",
+            "type": "shell",
+            "command": "ndk-build",
+            "windows": {
+                "command": "ndk-build.cmd"
+            },
+            "args": ["NDK_PROJECT_PATH=.", "APP_BUILD_SCRIPT=./Android.mk", "NDK_APPLICATION_MK=./Application.mk"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
