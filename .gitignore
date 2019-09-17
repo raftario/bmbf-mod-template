@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# VSCode C/C++ stuff
+!.vscode/c_cpp_properties.json

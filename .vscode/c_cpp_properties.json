@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Quest",
+            "defines": [
+                "MOD_ID='\"{{ mod.id }}\"'",
+                "VERSION='\"0.1.0\"'"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
