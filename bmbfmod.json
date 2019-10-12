@@ -8,19 +8,16 @@
         {% endfor %}
     ],
     "category": "{{ mod.category }}",
-    "gameVersion": "1.3.0p2",
+    "gameVersion": "1.4.3",
     "version": "0.1.0",
-    "links": {
-        "project-home": "{{ mod.url }}"
-    },
     "platform": "Quest",
     "components": [{
-            "Type": "HookMod",
-            "InstallAction": {
-                "InstallLibraryFile": "lib{{ mod.out }}.so"
+            "type": "HookMod",
+            "installAction": {
+                "installLibraryFile": "lib{{ mod.out }}.so"
             },
-            "UninstallAction": {
-                "RemoveLibraryFile": "lib{{ mod.out }}.so"
+            "uninstallAction": {
+                "removeLibraryFile": "lib{{ mod.out }}.so"
             }
         }
     ]
