@@ -2,12 +2,12 @@
     "toFill": [
         ".vscode/c_cpp_properties.json",
         "src/main.cpp",
-        ".gitmodules",
         "Android.mk",
-        "beatonmod.json",
+        "bmbfmod.json",
         "README.md"
     ],
     "toDelete": [
+        ".gitmodules",
         "LICENSE"
     ],
     "submodules": [
