@@ -3,8 +3,11 @@
         {
             "name": "Quest",
             "defines": [
-                "MOD_ID='\"{{ mod.id }}\"'",
-                "VERSION='\"0.1.0\"'"
+                "MOD_ID=\"{{ mod.id }}\"",
+                "VERSION=\"0.1.0\""
+            ],
+            "includePath": [
+                "${workspaceFolder}/**"
             ],
             "cStandard": "c11",
             "cppStandard": "c++17",
