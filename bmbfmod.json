@@ -8,10 +8,11 @@
         {% endfor %}
     ],
     "category": "{{ mod.category }}",
-    "gameVersion": "1.4.3",
+    "gameVersion": "{{ mod.gameVersion }}",
     "version": "0.1.0",
     "platform": "Quest",
-    "components": [{
+    "components": [
+        {
             "type": "HookMod",
             "installAction": {
                 "installLibraryFile": "lib{{ mod.out }}.so"
