@@ -24,7 +24,7 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 include $(CLEAR_VARS)
 LOCAL_LDLIBS     := -llog
-LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"'
+LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"' -I'{{ mod.libil2cpp }}'
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
