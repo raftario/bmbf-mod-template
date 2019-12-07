@@ -16,6 +16,36 @@
             "options": {
                 "env": {}
             }
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "./build.ps1",
+            "windows": {
+                "command": "./build.ps1"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "env": {}
+            }
+        },
+        {
+            "label": "Copy",
+            "type": "shell",
+            "command": "./copy.ps1",
+            "windows": {
+                "command": "./copy.ps1"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "env": {}
+            }
         }
     ]
 }
