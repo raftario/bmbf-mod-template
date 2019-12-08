@@ -35,7 +35,10 @@
 !.vscode/c_cpp_properties.json
 !.vscode/tasks.json
 
+# NDK stuff
 out/
+obj/
+objs/
 libs/
 lib/
 ndkpath.txt
