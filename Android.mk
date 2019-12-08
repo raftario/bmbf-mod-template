@@ -24,9 +24,10 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 include $(CLEAR_VARS)
 LOCAL_LDLIBS     := -llog
-LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"' -I'{{ mod.libil2cpp }}'
+LOCAL_CFLAGS     := -DMOD_ID='"{{ mod.id }}"' -DVERSION='"0.1.0"'
+# LOCAL_CFLAGS	 += -I'{{ mod.libil2cpp }}
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
-LOCAL_SRC_FILES  := $(call rwildcard,extern/shared/inline-hook/,*.cpp) $(call rwildcard,extern/shared/utils/,*.cpp) $(call rwildcard,extern/shared/inline-hook/,*.c) $(call rwildcard,src/,*.cpp)
+LOCAL_SRC_FILES  := $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/utils/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.c) $(call rwildcard,src/,*.cpp)
 include $(BUILD_SHARED_LIBRARY)
