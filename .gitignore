@@ -37,8 +37,8 @@
 
 # NDK stuff
 out/
-obj/
-objs/
-libs/
-lib/
+[Ll]ib/
+[Ll]ibs/
+[Oo]bj/
+[Oo]bjs/
 ndkpath.txt

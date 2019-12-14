@@ -9,16 +9,13 @@
                 "command": "ndk-build.cmd"
             },
             "args": ["NDK_PROJECT_PATH=.", "APP_BUILD_SCRIPT=./Android.mk", "NDK_APPLICATION_MK=./Application.mk"],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "options": {
                 "env": {}
             }
         },
         {
-            "label": "Build",
+            "label": "Powershell Build",
             "type": "shell",
             "command": "./build.ps1",
             "windows": {
@@ -33,16 +30,13 @@
             }
         },
         {
-            "label": "Copy",
+            "label": "Powershell Build, Copy, and Test",
             "type": "shell",
             "command": "./copy.ps1",
             "windows": {
                 "command": "./copy.ps1"
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "options": {
                 "env": {}
             }
