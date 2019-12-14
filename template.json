@@ -4,7 +4,8 @@
         "src/main.cpp",
         "Android.mk",
         "bmbfmod.json",
-        "README.md"
+        "README.md",
+        "copy.ps1"
     ],
     "toDelete": [
         ".gitmodules",
