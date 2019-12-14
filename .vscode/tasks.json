@@ -3,6 +3,7 @@
     "tasks": [
         {
             "label": "NDK Build",
+            "detail": "Builds the library using ndk-build.cmd",
             "type": "shell",
             "command": "ndk-build",
             "windows": {
@@ -16,6 +17,7 @@
         },
         {
             "label": "Powershell Build",
+            "detail": "Builds the library using Powershell (recommended)",
             "type": "shell",
             "command": "./build.ps1",
             "windows": {
@@ -30,7 +32,8 @@
             }
         },
         {
-            "label": "Powershell Build, Copy, and Test",
+            "label": "Powershell Build and Copy",
+            "detail": "Builds and copies the library to the Quest using adb and force-quits Beat Saber",
             "type": "shell",
             "command": "./copy.ps1",
             "windows": {
@@ -40,6 +43,20 @@
             "options": {
                 "env": {}
             }
-        }
+        },
+        {
+            "label": "BMBF Build",
+            "detail": "Builds a .zip to be uploaded into BMBF",
+            "type": "shell",
+            "command": "./buildBMBF.ps1",
+            "windows": {
+                "command": "./buildBMBF.ps1"
+            },
+            "args": [],
+            "group": "build",
+            "options": {
+                "env": {}
+            }
+        },
     ]
 }

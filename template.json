@@ -5,7 +5,8 @@
         "Android.mk",
         "bmbfmod.json",
         "README.md",
-        "copy.ps1"
+        "copy.ps1",
+        "buildBMBF.ps1"
     ],
     "toDelete": [
         ".gitmodules",
