@@ -1,10 +1,11 @@
 {
     "toFill": [
         ".vscode/c_cpp_properties.json",
-        "src/main.cpp",
         "Android.mk",
         "bmbfmod.json",
-        "README.md"
+        "README.md",
+        "copy.ps1",
+        "buildBMBF.ps1"
     ],
     "toDelete": [
         ".gitmodules",
@@ -14,8 +15,7 @@
         {
             "path": "beatsaber-hook",
             "url": "https://github.com/sc2ad/beatsaber-hook.git",
-            "branch": "modSettings",
-            "commit": "9436ea96950c827aef27997b403438bae94c504b"
+            "branch": "modSettings"
         }
     ]
 }

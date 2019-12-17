@@ -3,12 +3,19 @@
         {
             "name": "Quest",
             "defines": [
-                "MOD_ID='\"{{ mod.id }}\"'",
-                "VERSION='\"0.1.0\"'"
+                "MOD_ID=\"{{ mod.id }}\"",
+                "VERSION=\"0.1.0\"",
+                "__GNUC__",
+                "__aarch64__"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "{{ mod.libil2cpp }}",
+                "{{ mod.ndkpath }}/**"
             ],
             "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "cppStandard": "c++20",
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4

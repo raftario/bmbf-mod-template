@@ -34,3 +34,11 @@
 # VSCode config stuff
 !.vscode/c_cpp_properties.json
 !.vscode/tasks.json
+
+# NDK stuff
+out/
+[Ll]ib/
+[Ll]ibs/
+[Oo]bj/
+[Oo]bjs/
+ndkpath.txt
