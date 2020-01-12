@@ -80,10 +80,10 @@ __attribute__((constructor)) void lib_main()
 extern "C" void load() {
     log(INFO, "Hello from il2cpp_init!");
     log(INFO, "Installing hooks...");
-    INSTALL_HOOK_OFFSETLESS(FireworksController_OnEnable, il2cpp_utils::GetMethod("", "FireworksController", "OnEnable", 0));
-    INSTALL_HOOK_OFFSETLESS(HealthWarningFlowCoordinator_DidActivate, il2cpp_utils::GetMethod("", "HealthWarningFlowCoordinator", "DidActivate", 2));
-    INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_IsBeatmapLevelLoaded, il2cpp_utils::GetMethod("", "BeatmapLevelsModel", "IsBeatmapLevelLoaded", 1));
-    INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_get_customLevelPackCollection, il2cpp_utils::GetMethod("", "BeatmapLevelsModel", "get_customLevelPackCollection", 0));
-    INSTALL_HOOK_OFFSETLESS(MonoBehaviour_print, il2cpp_utils::GetMethod("UnityEngine", "MonoBehaviour", "print", 1));
+    INSTALL_HOOK_OFFSETLESS(FireworksController_OnEnable, il2cpp_utils::FindMethod("", "FireworksController", "OnEnable", 0));
+    INSTALL_HOOK_OFFSETLESS(HealthWarningFlowCoordinator_DidActivate, il2cpp_utils::FindMethod("", "HealthWarningFlowCoordinator", "DidActivate", 2));
+    INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_IsBeatmapLevelLoaded, il2cpp_utils::FindMethod("", "BeatmapLevelsModel", "IsBeatmapLevelLoaded", 1));
+    INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_get_customLevelPackCollection, il2cpp_utils::FindMethod("", "BeatmapLevelsModel", "get_customLevelPackCollection", 0));
+    INSTALL_HOOK_OFFSETLESS(MonoBehaviour_print, il2cpp_utils::FindMethod("UnityEngine", "MonoBehaviour", "print", 1));
     log(INFO, "Installed all hooks!");
 }
