@@ -49,7 +49,7 @@ MAKE_HOOK_OFFSETLESS(BeatmapLevelsModel_IsBeatmapLevelLoaded, bool, Il2CppObject
         // Since we know that allLoadedBeatmapLevelPackCollection is actually of type: IBeatmapLevelPackCollection, we can use it like one
         auto* beatmapLevelPacks = CRASH_UNLESS(il2cpp_utils::GetPropertyValue<Il2CppArray*>(
             allLoadedBeatmapLevelPackCollection, "beatmapLevelPacks"));
-        log(INFO, "There are a total of: %ui level packs", il2cpp_functions::array_length(beatmapLevelPacks));
+        log(INFO, "There are a total of: %u level packs", il2cpp_functions::array_length(beatmapLevelPacks));
     }
     return actualIsLoadedValue;  // be sure to actually return the original function's result if you want the caller to have it!
 }
