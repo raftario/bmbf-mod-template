@@ -27,9 +27,9 @@ LOCAL_CFLAGS     := -D'MOD_ID="{{ mod.id }}"' -D'VERSION="0.1.0"' -I'{{ mod.libi
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_C_INCLUDES := ./include ./src
 LOCAL_SRC_FILES  := $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/utils/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.c)
-# In order to add configuration support to your project, uncomment the following line:
+# In order to add configuration support to your project, uncomment the following line and the include in main.cpp:
 # LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/shared/config/,*.cpp)
-# In order to add custom UI support to your project, uncomment the following line:
+# In order to add custom UI support to your project, uncomment the following line and the include in main.cpp:
 # LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/shared/customui/,*.cpp)
 # Add any new SRC includes from beatsaber-hook or other external libraries here
 LOCAL_SRC_FILES  += $(call rwildcard,src/,*.cpp)

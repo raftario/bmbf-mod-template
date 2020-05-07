@@ -6,10 +6,11 @@
 #include "../extern/beatsaber-hook/shared/utils/il2cpp-functions.hpp"  // if you use il2cpp_functions:: methods
 #include "../extern/beatsaber-hook/shared/utils/utils.h"  // always import last to avoid dumb math.h log errors!
 
+// TODO: make fireworks appear during Health warning?
 // Hook a void instance method: FireworksController.OnEnable()
 // name for the original v     method's return type v    v arguments (start with Il2CppObject* self only for instance methods!)
 MAKE_HOOK_OFFSETLESS(FireworksController_OnEnable, void, Il2CppObject* self) {
-    // Get an instance field, crashing the game if it fails
+    // Get an instance field, crashing the game if it fails for faster debugging/bug reporting
     float _minSpawnInterval = CRASH_UNLESS(il2cpp_utils::GetFieldValue<float>(self, "_minSpawnInterval"));
     log(INFO, "FireworksController._minSpawnInterval: %f", _minSpawnInterval);
     // For a softer touch, you can instead return on failure
@@ -17,6 +18,9 @@ MAKE_HOOK_OFFSETLESS(FireworksController_OnEnable, void, Il2CppObject* self) {
     log(INFO, "FireworksController._spawnSize: (%f, %f, %f)", _spawnSize.x, _spawnSize.y, _spawnSize.z);
     // Set a field
     CRASH_UNLESS(il2cpp_utils::SetFieldValue(self, "_minSpawnInterval", 0));
+    // this should give the fireworks much more room to be closer or farther from you - some might even appear behind you!
+    _spawnSize.z *= 20;
+    CRASH_UNLESS(il2cpp_utils::SetFieldValue(self, "_spawnSize", _spawnSize));
     // Call original method, if desired
     FireworksController_OnEnable(self);
 }
@@ -25,8 +29,8 @@ MAKE_HOOK_OFFSETLESS(FireworksController_OnEnable, void, Il2CppObject* self) {
 // Because FlowCoordinator.ActivationType is an enum that inherits an int, we can simply express it as an int.
 MAKE_HOOK_OFFSETLESS(HealthWarningFlowCoordinator_DidActivate, void, Il2CppObject* self, bool firstActivation, int activationType) {
     // We can ignore one of the parameters by calling the original function with one of the parameters constant:
-    log(INFO, "Calling original HealthWarningFlowCoordinator_DidActive with 'false' firstActivation!");
-    HealthWarningFlowCoordinator_DidActivate(self, false, activationType);
+    log(INFO, "Calling original HealthWarningFlowCoordinator_DidActive with 'true' firstActivation!");
+    HealthWarningFlowCoordinator_DidActivate(self, true, activationType);
 }
 
 // Hook a bool instance method: BeatmapLevelsModel.IsBeatmapLevelLoaded(string levelId)
@@ -38,18 +42,21 @@ MAKE_HOOK_OFFSETLESS(BeatmapLevelsModel_IsBeatmapLevelLoaded, bool, Il2CppObject
     // We can call the original function whenever we want
     auto actualIsLoadedValue = BeatmapLevelsModel_IsBeatmapLevelLoaded(self, levelId);
     log(INFO, "The beatmap %s", actualIsLoadedValue ? "is loaded" : "is not loaded");
+    if (actualIsLoadedValue) {
+        // We can call other methods whenever we want (this could also be expressed as GetPropertyValue if you remove the get_):
+        auto* allLoadedBeatmapLevelPackCollection = CRASH_UNLESS(il2cpp_utils::RunMethod(self, "get_allLoadedBeatmapLevelPackCollection"));
+        log(INFO, "allLoadedBeatmapLevelPackCollection pointer: %p", allLoadedBeatmapLevelPackCollection);
+        // Since we know that allLoadedBeatmapLevelPackCollection is actually of type: IBeatmapLevelPackCollection, we can use it like one
+        auto* beatmapLevelPacks = CRASH_UNLESS(il2cpp_utils::GetPropertyValue<Il2CppArray*>(
+            allLoadedBeatmapLevelPackCollection, "beatmapLevelPacks"));
+        log(INFO, "There are a total of: %ui level packs", il2cpp_functions::array_length(beatmapLevelPacks));
+    }
     return actualIsLoadedValue;  // be sure to actually return the original function's result if you want the caller to have it!
 }
 
-// Hook an instance property getter: BeatmapLevelsModel.get_customLevelPackCollection()
+// Generally /avoid/ hooking instance property getters like BeatmapLevelsModel.get_customLevelPackCollection()
+// A hook needs 3-5 instructions, so hooking methods with too few instructions can result in the next method being overwritten!
 MAKE_HOOK_OFFSETLESS(BeatmapLevelsModel_get_customLevelPackCollection, Il2CppObject*, Il2CppObject* self) {
-    // We can call other methods whenever we want:
-    auto* allLoadedBeatmapLevelPackCollection = CRASH_UNLESS(il2cpp_utils::GetPropertyValue(self, "allLoadedBeatmapLevelPackCollection"));
-    log(INFO, "allLoadedBeatmapLevelPackCollection pointer: %p", allLoadedBeatmapLevelPackCollection);
-    // Since we know that allLoadedBeatmapLevelPackCollection is actually of type: IBeatmapLevelPackCollection, we can use it like one
-    auto* beatmapLevelPacks = CRASH_UNLESS(il2cpp_utils::GetPropertyValue<Il2CppArray*>(
-        allLoadedBeatmapLevelPackCollection, "beatmapLevelPacks"));
-    log(INFO, "There are a total of: %ui level packs", il2cpp_functions::array_length(beatmapLevelPacks));
     return BeatmapLevelsModel_get_customLevelPackCollection(self);
 }
 
@@ -74,13 +81,17 @@ extern "C" void load() {
     log(INFO, "Installing hooks...");
     // FindMethod expects either an Il2CppClass*/Il2CppObject* OR 2 strings (one for namespace, then one for class name)
     // followed by a method name and then the argument types (if any) as Il2CppType*s.
+    // must be called before using any method or field of il2cpp_functions; many il2cpp_utils methods will call it for you:
+    il2cpp_functions::Init();
+    // il2cpp_functions::defaults exposes the Il2CppDefaults*, which contains pointers to many basic C#/Unity Il2CppClass*s
     auto* strType = il2cpp_functions::class_get_type(il2cpp_functions::defaults->string_class);
     INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_IsBeatmapLevelLoaded,
         il2cpp_utils::FindMethod("", "BeatmapLevelsModel", "IsBeatmapLevelLoaded", strType));
     // Just use that without anything for the arguments for methods with no arguments!
     INSTALL_HOOK_OFFSETLESS(FireworksController_OnEnable, il2cpp_utils::FindMethod("", "FireworksController", "OnEnable"));
-    INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_get_customLevelPackCollection,
-        il2cpp_utils::FindMethod("", "BeatmapLevelsModel", "get_customLevelPackCollection"));
+    // This hook may result in ILL_OPC due to the next instruction in memory being corrupted and later called by Unity!
+    // INSTALL_HOOK_OFFSETLESS(BeatmapLevelsModel_get_customLevelPackCollection, il2cpp_utils::FindMethod("", "BeatmapLevelsModel", "get_customLevelPackCollection"));
+    
     // Since grabbing the correct Il2CppType*s is a lot of work, you can use the Unsafe variant to specify only the number of
     // arguments. But beware! It will select the first matching method it finds with no complaints, even if multiple matches exist.
     INSTALL_HOOK_OFFSETLESS(HealthWarningFlowCoordinator_DidActivate, il2cpp_utils::FindMethodUnsafe(
@@ -98,6 +109,7 @@ extern "C" void load() {
     static auto* a1D = CRASH_UNLESS(il2cpp_utils::GetClassFromName("", "OVRInput/Axis1D"));
     //                                                                              v no <blah> means default (Il2CppObject*)!
     auto* primaryHandTrigger = CRASH_UNLESS(il2cpp_utils::GetFieldValue(a1D, "PrimaryHandTrigger"));
+    CRASH_UNLESS((intptr_t)primaryHandTrigger > 64);
     // This method (OVRInput.Get) has a lot of 2-argument overloads, but only one with an Axis1D in the first spot!
     float inputValue = CRASH_UNLESS(il2cpp_utils::RunMethod<float>("", "OVRInput", "Get", primaryHandTrigger, leftTouch));
     // And you can still grab the integer from that enum Il2CppObject* using object_unbox:
