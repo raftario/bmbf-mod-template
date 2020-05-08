@@ -1,4 +1,4 @@
-APP_ABI := arm64-v8a  # armeabi-v7a  # has to match architecture of Beatsaber
+APP_ABI := arm64-v8a
 APP_PLATFORM := 25
 APP_PIE:= true
 APP_STL := c++_static
