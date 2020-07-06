@@ -15,7 +15,7 @@
         {
             "path": "beatsaber-hook",
             "url": "https://github.com/sc2ad/beatsaber-hook.git",
-            "branch": "modSettings"
+            "branch": "so-update"
         }
     ]
 }

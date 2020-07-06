@@ -16,21 +16,37 @@
 LOCAL_PATH := $(call my-dir)
 TARGET_ARCH_ABI := $(APP_ABI)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE := hook
-
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
+# Build the modloader shared library
 include $(CLEAR_VARS)
+LOCAL_MODULE	        := modloader
+LOCAL_SRC_FILES         := ./extern/beatsaber-hook/include/libs/libmodloader.so
+LOCAL_EXPORT_C_INCLUDES := ./extern/beatsaber-hook/include/
+include $(PREBUILT_SHARED_LIBRARY)
+
+# Build the beatsaber-hook shared library, SPECIFICALLY VERSIONED!
+include $(CLEAR_VARS)
+LOCAL_MODULE	        := beatsaber-hook_2019_2_1f1_0_2_0
+LOCAL_SRC_FILES         := ./include/libs/libbeatsaber-hook_2019_2_1f1_0_2_0.so
+LOCAL_EXPORT_C_INCLUDES := ./extern/beatsaber-hook/shared/
+include $(PREBUILT_SHARED_LIBRARY)
+
+# If you would like to use more shared libraries (such as custom UI, utils, or more) add them here, following the format above.
+# In addition, ensure that you add them to the shared library build below.
+
+include $(CLEAR_VARS)
+# Include shared libraries
+LOCAL_SHARED_LIBRARIES += modloader
+LOCAL_SHARED_LIBRARIES += beatsaber-hook_2019_2_1f1_0_2_0
 LOCAL_LDLIBS     := -llog
-LOCAL_CFLAGS     := -D'MOD_ID="{{ mod.id }}"' -D'VERSION="0.1.0"' -I'{{ mod.libil2cpp }}'
+LOCAL_CFLAGS     := -I'{{ mod.libil2cpp }}'
 LOCAL_MODULE     := {{ mod.out }}
+LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
-LOCAL_SRC_FILES  := $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/utils/,*.cpp) $(call rwildcard,extern/beatsaber-hook/shared/inline-hook/,*.c)
-# In order to add configuration support to your project, uncomment the following line and the include in main.cpp:
-# LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/shared/config/,*.cpp)
-# In order to add custom UI support to your project, uncomment the following line and the include in main.cpp:
-# LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/shared/customui/,*.cpp)
-# Add any new SRC includes from beatsaber-hook or other external libraries here
 LOCAL_SRC_FILES  += $(call rwildcard,src/,*.cpp)
+# At the moment, these files must be built within the mod to avoid recursive trampoline invokes.
+# This will be fixed in a future version.
+LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/src/inline-hook,*.cpp)
+LOCAL_SRC_FILES  += $(call rwildcard,extern/beatsaber-hook/src/inline-hook,*.c)
 include $(BUILD_SHARED_LIBRARY)
