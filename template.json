@@ -1,6 +1,7 @@
 {
     "toFill": [
         ".vscode/c_cpp_properties.json",
+        "src/main.cpp",
         "Android.mk",
         "bmbfmod.json",
         "README.md",
