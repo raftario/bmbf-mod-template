@@ -116,7 +116,7 @@ __attribute__((constructor)) void lib_main() {
 extern "C" void setup(ModInfo& info) {
     // Set the ID and version of this mod
     info.id = "{{ mod.id }}";
-    info.version = "{{ mod.version }}";
+    info.version = "0.1.0";
     modInfo = info;
     // Log some information
     getLogger().info("Modloader name: %s", Modloader::getInfo().name.c_str());
