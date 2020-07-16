@@ -40,7 +40,7 @@ include $(CLEAR_VARS)
 LOCAL_SHARED_LIBRARIES += modloader
 LOCAL_SHARED_LIBRARIES += beatsaber-hook_2019_2_1f1_0_2_0
 LOCAL_LDLIBS     := -llog
-LOCAL_CFLAGS     := -I'{{ mod.libil2cpp }}'
+LOCAL_CFLAGS     := -I'{{ mod.libil2cpp }}' -frtti
 LOCAL_MODULE     := {{ mod.out }}
 LOCAL_CPPFLAGS   := -std=c++2a
 LOCAL_C_INCLUDES := ./include ./src
